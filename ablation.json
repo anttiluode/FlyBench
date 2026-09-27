@@ -1,0 +1,14 @@
+{
+  "turn": {
+    "momentum_only (prev 2 turns/speeds)": 0.8197869145198027,
+    "where_it_is_and_has_been (no momentum)": 0.15162139668785424,
+    "where_it_is_now_only": 0.01932175116114576,
+    "full_history": 0.8212351461934422
+  },
+  "speed": {
+    "momentum_only (prev 2 turns/speeds)": 0.9926830270228418,
+    "where_it_is_and_has_been (no momentum)": 0.5410895399874662,
+    "where_it_is_now_only": 0.06841275928965418,
+    "full_history": 0.9927198186609616
+  }
+}

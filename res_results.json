@@ -1,0 +1,231 @@
+{
+  "CLEAN_sorting_no_breeding": {
+    "resonator": {
+      "n_flies": 120,
+      "tuned_A": {
+        "n": 34,
+        "mean_time_at_A": 0.5247794117647059,
+        "mean_time_at_B": 0.06941176470588235
+      },
+      "tuned_B": {
+        "n": 22,
+        "mean_time_at_A": 0.14295454545454545,
+        "mean_time_at_B": 0.2932954545454546
+      },
+      "untuned": {
+        "n": 64,
+        "mean_time_at_A": 0.1475859375,
+        "mean_time_at_B": 0.179671875
+      },
+      "spearman_tuning_vs_place_preference": 0.4232707962026134,
+      "p_value": 1.460541301544369e-06
+    },
+    "window": {
+      "n_flies": 120,
+      "tuned_A": {
+        "n": 34,
+        "mean_time_at_A": 0.4047794117647059,
+        "mean_time_at_B": 0.3095147058823529
+      },
+      "tuned_B": {
+        "n": 22,
+        "mean_time_at_A": 0.3043181818181818,
+        "mean_time_at_B": 0.18440909090909094
+      },
+      "untuned": {
+        "n": 64,
+        "mean_time_at_A": 0.3432109375,
+        "mean_time_at_B": 0.3243359375
+      },
+      "spearman_tuning_vs_place_preference": -0.09285194999214962,
+      "p_value": 0.31312965196838594
+    }
+  },
+  "sorting_with_breeding_resonator_s0__LINEAGE_CONFOUNDED": {
+    "tuned_to_A": {
+      "fly_frames": 8252,
+      "frac_at_A": 0.12057682985942801,
+      "frac_at_B": 0.057440620455647115
+    },
+    "tuned_to_B": {
+      "fly_frames": 26416,
+      "frac_at_A": 0.0975923682616596,
+      "frac_at_B": 0.32215324046032706
+    },
+    "untuned": {
+      "fly_frames": 37397,
+      "frac_at_A": 0.1012113271118004,
+      "frac_at_B": 0.2501270155360056
+    },
+    "chance_area_share_each": 0.136353847812057
+  },
+  "evolution_resonator_rhythm_s0": {
+    "first_300_frames": {
+      "frac_tuned": 0.41808265156282776,
+      "median_dist_to_nearest_rate": 0.16370597996861735,
+      "n": 4767
+    },
+    "last_1000_frames": {
+      "frac_tuned": 0.6687182809631789,
+      "median_dist_to_nearest_rate": 0.06548708822086691,
+      "n": 9261
+    },
+    "births": 19,
+    "deaths": 24,
+    "pop_end": 10
+  },
+  "sorting_with_breeding_resonator_s1__LINEAGE_CONFOUNDED": {
+    "tuned_to_A": {
+      "fly_frames": 181607,
+      "frac_at_A": 0.24578347750912685,
+      "frac_at_B": 0.10356428992274527
+    },
+    "tuned_to_B": {
+      "fly_frames": 20788,
+      "frac_at_A": 0.05118337502405234,
+      "frac_at_B": 0.32667885318452955
+    },
+    "untuned": {
+      "fly_frames": 45474,
+      "frac_at_A": 0.19199982407529578,
+      "frac_at_B": 0.1954303558077143
+    },
+    "chance_area_share_each": 0.136353847812057
+  },
+  "evolution_resonator_rhythm_s1": {
+    "first_300_frames": {
+      "frac_tuned": 0.6245568203022952,
+      "median_dist_to_nearest_rate": 0.11538063269219473,
+      "n": 5359
+    },
+    "last_1000_frames": {
+      "frac_tuned": 0.8345432816652695,
+      "median_dist_to_nearest_rate": 0.08539658083334489,
+      "n": 56063
+    },
+    "births": 106,
+    "deaths": 60,
+    "pop_end": 61
+  },
+  "sorting_with_breeding_window_s0__LINEAGE_CONFOUNDED": {
+    "tuned_to_A": {
+      "fly_frames": 79305,
+      "frac_at_A": 0.13141668242859844,
+      "frac_at_B": 0.14432885694470715
+    },
+    "tuned_to_B": {
+      "fly_frames": 96403,
+      "frac_at_A": 0.17754634191881996,
+      "frac_at_B": 0.1556694293746045
+    },
+    "untuned": {
+      "fly_frames": 326790,
+      "frac_at_A": 0.1740903944429144,
+      "frac_at_B": 0.1617062945622571
+    },
+    "chance_area_share_each": 0.136353847812057
+  },
+  "evolution_window_rhythm_s0": {
+    "first_300_frames": {
+      "frac_tuned": 0.3848331648129424,
+      "median_dist_to_nearest_rate": 0.16370597996861735,
+      "n": 4945
+    },
+    "last_1000_frames": {
+      "frac_tuned": 0.3016327268345584,
+      "median_dist_to_nearest_rate": 0.19150865447157273,
+      "n": 99588
+    },
+    "births": 223,
+    "deaths": 138,
+    "pop_end": 100
+  },
+  "sorting_with_breeding_window_s1__LINEAGE_CONFOUNDED": {
+    "tuned_to_A": {
+      "fly_frames": 257649,
+      "frac_at_A": 0.1387468998521244,
+      "frac_at_B": 0.17048775659909413
+    },
+    "tuned_to_B": {
+      "fly_frames": 57369,
+      "frac_at_A": 0.07512768219770259,
+      "frac_at_B": 0.22752706165350625
+    },
+    "untuned": {
+      "fly_frames": 183169,
+      "frac_at_A": 0.1815973226910667,
+      "frac_at_B": 0.1647221964415376
+    },
+    "chance_area_share_each": 0.136353847812057
+  },
+  "evolution_window_rhythm_s1": {
+    "first_300_frames": {
+      "frac_tuned": 0.5962195857631208,
+      "median_dist_to_nearest_rate": 0.11986782787375216,
+      "n": 4973
+    },
+    "last_1000_frames": {
+      "frac_tuned": 0.6063555452985622,
+      "median_dist_to_nearest_rate": 0.11986782787375216,
+      "n": 99661
+    },
+    "births": 228,
+    "deaths": 143,
+    "pop_end": 100
+  },
+  "evolution_resonator_room_NO_RHYTHM_s0": {
+    "first_300_frames": {
+      "frac_tuned": 0.4063395073515371,
+      "median_dist_to_nearest_rate": 0.15880676870770127,
+      "n": 5237
+    },
+    "last_1000_frames": {
+      "frac_tuned": 0.6629385259092372,
+      "median_dist_to_nearest_rate": 0.07950651435116363,
+      "n": 12428
+    },
+    "births": 14,
+    "deaths": 34,
+    "pop_end": 17
+  },
+  "camera_observer_original": {
+    "turn": {
+      "camera_instant": 0.0018337161643445787,
+      "camera_16_frame_spectra": 0.017120172129450606
+    },
+    "speed": {
+      "camera_instant": 0.012716375086575193,
+      "camera_16_frame_spectra": 0.041450696639439455
+    }
+  },
+  "camera_observer_window": {
+    "turn": {
+      "camera_instant": 0.002683921107249465,
+      "camera_16_frame_spectra": 0.005381511692668872
+    },
+    "speed": {
+      "camera_instant": 0.1869177737832185,
+      "camera_16_frame_spectra": 0.22616109335921664
+    }
+  },
+  "camera_observer_resonator": {
+    "turn": {
+      "camera_instant": 0.0019926115287527413,
+      "camera_16_frame_spectra": 0.001600071608946707
+    },
+    "speed": {
+      "camera_instant": 0.16621462343420146,
+      "camera_16_frame_spectra": 0.17064072179485879
+    }
+  },
+  "camera_plus_tuning_resonator__INCONCLUSIVE": {
+    "camera": 0.17064072179485879,
+    "tuning_only": -0.05009670922001619,
+    "camera_plus_tuning": 0.11800252612431805
+  },
+  "camera_plus_tuning_window__INCONCLUSIVE": {
+    "camera": 0.22616109335921664,
+    "tuning_only": -0.09602332803813418,
+    "camera_plus_tuning": 0.11744929562637418
+  }
+}

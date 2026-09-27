@@ -1,0 +1,148 @@
+{
+  "P1_movement_by_scene": {
+    "room_s0": {
+      "speed_median": 5.2585314509068635,
+      "speed_p90": 8.780819560769103,
+      "turn_abs_median": 0.029850602959050176,
+      "births": 9,
+      "deaths": 18,
+      "rows": 52373
+    },
+    "room_s1": {
+      "speed_median": 5.252985066165209,
+      "speed_p90": 8.868673538580358,
+      "turn_abs_median": 0.02960679872720906,
+      "births": 10,
+      "deaths": 20,
+      "rows": 52129
+    },
+    "gray_s0": {
+      "speed_median": 5.04594037277325,
+      "speed_p90": 8.760635587672471,
+      "turn_abs_median": 0.02996704528444427,
+      "births": 10,
+      "deaths": 20,
+      "rows": 51649
+    },
+    "gray_s1": {
+      "speed_median": 5.283144581327036,
+      "speed_p90": 8.90648082389983,
+      "turn_abs_median": 0.029425696679386465,
+      "births": 8,
+      "deaths": 16,
+      "rows": 51498
+    },
+    "room_static_s0": {
+      "speed_median": 5.098881135115286,
+      "speed_p90": 8.810332157870805,
+      "turn_abs_median": 0.02974449223867904,
+      "births": 16,
+      "deaths": 22,
+      "rows": 59476
+    },
+    "room_static_s1": {
+      "speed_median": 5.283588294939721,
+      "speed_p90": 8.840916052350916,
+      "turn_abs_median": 0.030639123131545376,
+      "births": 7,
+      "deaths": 14,
+      "rows": 50822
+    },
+    "black_s0": {
+      "speed_median": 7.604564115276467,
+      "speed_p90": 18.294998552010156,
+      "turn_abs_median": 0.0365993178544628,
+      "births": 0,
+      "deaths": 15,
+      "rows": 45000
+    },
+    "black_s1": {
+      "speed_median": 6.979367749158223,
+      "speed_p90": 18.53335826119364,
+      "turn_abs_median": 0.03479099543145603,
+      "births": 0,
+      "deaths": 15,
+      "rows": 45000
+    }
+  },
+  "P1_KS_distance": {
+    "room_s0 vs room_s1": {
+      "speed": 0.011357653226323872,
+      "turn": 0.010019221577315496
+    },
+    "room_s0 vs gray_s0": {
+      "speed": 0.03027046586067217,
+      "turn": 0.007650800721064305
+    },
+    "room_s0 vs room_static_s0": {
+      "speed": 0.023327148685148735,
+      "turn": 0.006154082018880347
+    },
+    "gray_s0 vs gray_s1": {
+      "speed": 0.034974746387011646,
+      "turn": 0.010210616108404125
+    },
+    "room_s0 vs black_s0": {
+      "speed": 0.40577697498923326,
+      "turn": 0.08394831688083548
+    }
+  },
+  "P2_energy_source": {
+    "room_s0": {
+      "corr_gain_vs_own_speed": 0.10308121569389425,
+      "mean_gain_when_nearly_still": 0.01844012216031544,
+      "mean_gain_when_moving_fast": 0.02166660777718245,
+      "decay_per_frame": 0.05
+    },
+    "gray_s0": {
+      "corr_gain_vs_own_speed": 0.06642192360311115,
+      "mean_gain_when_nearly_still": 0.017966585245441383,
+      "mean_gain_when_moving_fast": 0.02018466868137962,
+      "decay_per_frame": 0.05
+    },
+    "room_static_s0": {
+      "corr_gain_vs_own_speed": 0.0839984632465113,
+      "mean_gain_when_nearly_still": 0.018871154969931803,
+      "mean_gain_when_moving_fast": 0.021693059338833608,
+      "decay_per_frame": 0.05
+    }
+  },
+  "P3_person": {
+    "frac_flies_within_250px_of_person": 0.09867172675521822,
+    "same_spot_same_frames_no_person": 0.10362034186219343
+  },
+  "P4_dark": {
+    "median_step_px": 9.750547885571665,
+    "mean_resultant_heading_length": 0.3534219188496521,
+    "mean_heading_deg": 3.4089747280699143,
+    "all_die_at_frame": 2000
+  },
+  "observer_train_room_s0_test_room_s1": {
+    "turn": {
+      "camera_only": 0.004038567975748308,
+      "position_history_only": 0.8212351461934422,
+      "camera_plus_history": 0.8213926089225007,
+      "ORACLE_hidden_centroid": 0.8961280151897144
+    },
+    "speed": {
+      "camera_only": 0.013694059332726605,
+      "position_history_only": 0.9927198186609616,
+      "camera_plus_history": 0.9927890201748281,
+      "ORACLE_hidden_centroid": 0.9946994084820965
+    }
+  },
+  "observer_train_gray_s0_test_room_s1": {
+    "turn": {
+      "camera_only": -1.3299361337537619e-05,
+      "position_history_only": 0.8242967557205317,
+      "camera_plus_history": 0.8242967557205317,
+      "ORACLE_hidden_centroid": 0.8949847406572361
+    },
+    "speed": {
+      "camera_only": -0.0018872644771839031,
+      "position_history_only": 0.9925136177364441,
+      "camera_plus_history": 0.9925136177364441,
+      "ORACLE_hidden_centroid": 0.9946313840183133
+    }
+  }
+}
