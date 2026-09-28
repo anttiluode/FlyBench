@@ -84,6 +84,7 @@ class Soma:
         self.y = False
         self.last_click_t = -10 ** 9
         self.born = 0
+        self.fed = []
 
     def step(self, bugs, click=False, learn=True):
         self.t += 1
@@ -109,10 +110,12 @@ class Soma:
             want = {b: min(G * b.elig, CAP) for b in bugs if b.elig > 0}
             tot = sum(want.values())
             scale = min(1.0, BUDGET / tot) if tot > 0 else 0.0
+            self.fed = []                                       # (bug, food) for this click
             for b, f in want.items():
                 b.energy = min(b.energy + f * scale, b.config.initial_energy * 1.5)
                 if f * scale > 1.0:
                     b.anchor = ANCHOR
+                    self.fed.append((b, f * scale))
             self.pending = []                                   # confirmed
         keep = []
         for (ts, c) in self.pending:
