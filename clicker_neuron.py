@@ -18,6 +18,10 @@ Screen:
   strip bottom-right       soma voltage (white) and threshold (red), last 200 frames
   white flash              your click
   top-left                 tuning histogram (as in resonator_flies)
+  right pane               the arbor: a dendrite growing from the soma toward where
+                           your clicks fed flies, coloured by their tuning. It only
+                           grows, so it is a record of what you taught and where.
+                           Key A saves it as a PNG, key R clears it.
 
 If nobody clicks, the colony starves in a few minutes and is replaced by fresh
 random flies: an untrained neuron. Save Population keeps a trained one.
@@ -31,6 +35,7 @@ import cv2
 import resonator_flies as RF          # also imports dumbflies as df
 df = RF.df
 import neuron as nr
+import arbor as ab
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -63,8 +68,17 @@ def neuron_update_display(self, frame):
     click = getattr(self, "_clicked", False)
     self._clicked = False
     born0 = self.soma.born
+    self.soma.fed = []
     y = self.soma.step(self.bugs, click=click, learn=True)
     self.total_births += self.soma.born - born0          # buds count as births
+    h0, w0 = frame.shape[:2]
+    if not hasattr(self, "arbor"):
+        self.arbor = ab.Arbor((70, h0 - 85))              # grows from the soma
+    if self.soma.fed:                                    # resource where the click fed flies
+        self.arbor.feed([(b.x, b.y) for b, _ in self.soma.fed],
+                        [RF.hue_bgr(b.traits.get("omega", 0.5)) for b, _ in self.soma.fed])
+    for _ in range(2):
+        self.arbor.step()
     self._n_clicks += int(click)
     self._n_spikes += int(y)
     self._trace.append((self.soma.V, self.soma.theta))
@@ -103,6 +117,9 @@ def neuron_update_display(self, frame):
         cv2.rectangle(img, (0, 0), (w - 1, h - 1), (255, 255, 255), 8)
         self._flash -= 1
     RF.push_to_canvas(self, img)
+    arb = self.arbor.render(frame)
+    self._arbor_img = arb
+    RF.put_image(self, cv2.cvtColor(arb, cv2.COLOR_BGR2RGB), w + 10, "arbor")
 
 
 _orig_setup_gui = df.BugGUI.setup_gui
@@ -116,6 +133,18 @@ def neuron_setup_gui(self):
     self.canvas.bind("<Button-1>", click)
     self.root.bind("<Key-c>", click)
     self.root.bind("<space>", click)
+
+    def save_arbor(e=None):
+        if hasattr(self, "_arbor_img"):
+            fn = os.path.join(HERE, time.strftime("arbor_%Y%m%d_%H%M%S.png"))
+            cv2.imwrite(fn, self._arbor_img)
+            print("saved", fn)
+
+    def clear_arbor(e=None):
+        if hasattr(self, "arbor"):
+            self.arbor = ab.Arbor(tuple(self.arbor.nodes[0]))
+    self.root.bind("<Key-a>", save_arbor)
+    self.root.bind("<Key-r>", clear_arbor)
 
     def no_focus(w):
         for ch in w.winfo_children():
