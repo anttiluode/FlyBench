@@ -114,6 +114,8 @@ The live launcher was smoke-tested here with stubbed Tk (brain swap, inheritance
 
 ## Live notes (first overnight run, Sep 27–28)
 
+![pic](pic.png)
+
 - **Lights on = baby boom for the slow flies.** A light switch is a step, the slowest signal there is. Measured on the bench (fly held in place, 300 frames after the switch): food 40 for ω = 0.1, 15 for ω = 0.3, 6 for ω = 0.5, under 2 for ω ≥ 0.8; zero at every tuning in the dark. The morning run went to 100 flies, all blue.
 - **The loop slowed from ~12.5 to ~6 fps overnight.** The original's population graph replots every point since start on every frame. `resonator_flies.py` now redraws every 30 frames and keeps the last 3000 points. Frame rate matters: a fly's tuning in Hz is ω·fps/2π, so if fps halves, every fly's Hz halves.
 - **`flies_log.csv`** gets a row every 10 s: fps, population, births, deaths, brightness, and the tuning histogram. `python plot_log.py` turns it into `flies_log.png`.
