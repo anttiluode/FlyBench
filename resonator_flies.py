@@ -130,9 +130,19 @@ def push_to_canvas(self, img):
         if e.update():
             keep.append(e)
     self.visual_effects = keep
-    photo = df.ImageTk.PhotoImage(image=df.Image.fromarray(frame_rgb))
-    self.canvas.create_image(0, 0, image=photo, anchor=df.tk.NW)
-    self.canvas.photo = photo
+    put_image(self, frame_rgb, 0, "main")
+
+
+def put_image(self, rgb, x, name):
+    """Reuse one canvas item per image. The original created a new item every
+    frame and never deleted the old ones, so Tk slowed down over long runs."""
+    photo = df.ImageTk.PhotoImage(image=df.Image.fromarray(rgb))
+    items = self.__dict__.setdefault("_canvas_items", {})
+    if name in items:
+        self.canvas.itemconfig(items[name], image=photo)
+    else:
+        items[name] = self.canvas.create_image(x, 0, image=photo, anchor=df.tk.NW)
+    self.__dict__.setdefault("_photos", {})[name] = photo      # keep a reference
 
 
 def patched_update_display(self, frame):
