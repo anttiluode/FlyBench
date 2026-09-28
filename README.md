@@ -4,7 +4,7 @@ EDIT: New HTML version live:
 
 [Check it out!](https://anttiluode.github.io/FlyBench/)
 
-![A clicker-trained fly neuron in a real room. Left: the live webcam with resonator flies; lines run from the flies feeding the soma (bottom left). Right: the dendrite that grew toward where the clicks fed flies, coloured by their tuning.](pic.png)
+[Web version!](pic2.png)
 
 *Left: resonator flies living on a webcam feed. Each ring's colour is the fly's tuning, the lines are the flies currently feeding the soma (bottom left), and the strip top left is the colony's tuning in Hz. Right: the arbor, a dendrite grown from the soma toward wherever the teacher's clicks fed flies, coloured by what they were tuned to.*
 
@@ -133,6 +133,8 @@ python rescore_fixed.py && python res_fig.py
 ---
 
 ## Part 3 — Clicker neuron
+
+![A clicker-trained fly neuron in a real room. Left: the live webcam with resonator flies; lines run from the flies feeding the soma (bottom left). Right: the dendrite that grew toward where the clicks fed flies, coloured by their tuning.](pic.png)
 
 One colony becomes one neuron. The flies are the dendrite: each listening fly is a tuned temporal filter sitting at a place. The soma sums what they hear, and your click is the modulator. `neuron.py`:
 
