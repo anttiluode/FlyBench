@@ -4,7 +4,7 @@ clicker_neuron.py - clicker-train a neuron made of resonator flies, live on the 
     python clicker_neuron.py
     python clicker_neuron.py --self-feed 1     # control: flies also eat what they hear
 
-SPACE = the click (the modulator). Press it whenever the thing you want the
+CLICK = left mouse button on the video (or the C / SPACE key): the modulator. Click whenever the thing you want the
 neuron to detect is happening: a hand wave, a phone blinking at a steady rate,
 a nod... The flies eat ONLY what your clicks give them, shared by how active
 each was just before the click (more if it helped the neuron fire). When the
@@ -110,7 +110,21 @@ _orig_setup_gui = df.BugGUI.setup_gui
 
 def neuron_setup_gui(self):
     _orig_setup_gui(self)
-    self.root.bind("<space>", lambda e: setattr(self, "_clicked", True))
+    click = lambda e=None: setattr(self, "_clicked", True)
+    # mouse click on the video = the click (no focus problems); keys C or SPACE also work.
+    # Buttons must not take keyboard focus, or SPACE would press "Save Population" etc.
+    self.canvas.bind("<Button-1>", click)
+    self.root.bind("<Key-c>", click)
+    self.root.bind("<space>", click)
+
+    def no_focus(w):
+        for ch in w.winfo_children():
+            try:
+                ch.configure(takefocus=0)
+            except Exception:
+                pass
+            no_focus(ch)
+    no_focus(self.root)
     self.root.focus_force()
 
 
