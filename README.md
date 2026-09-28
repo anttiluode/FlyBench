@@ -1,5 +1,7 @@
 # FlyBench — dumbflies.py as a research bench
 
+![pic](pic.png)
+
 The flies in `dumbflies.py` are a system whose rules we wrote and then forgot.
 That makes them a rare thing: a black box with the answer key in the drawer.
 This bench runs the **original classes unchanged**, watches the flies from outside,
