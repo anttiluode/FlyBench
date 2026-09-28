@@ -129,7 +129,7 @@ def make_bug_class(EnhancedBug, mode="resonator", omega_range=(0.1, 1.3)):
 
             self.energy -= self.config.energy_decay
             self.energy = min(self.energy, self.config.initial_energy * 1.5)
-            self.is_mating = self.energy > self.config.mating_threshold
+            self.is_mating = bool(self.energy > self.config.mating_threshold)
 
             m = self.config.momentum
             self.current_velocity = self.current_velocity * m + speed * (1 - m)
