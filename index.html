@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FlyBench · Teach a neuron made of flies</title>
+<style>
+:root{--bg:#070910;--panel:#0d111c;--panel2:#111827;--line:#222b40;--fg:#edf3ff;--dim:#8f9aae;--gold:#ffd166;--cyan:#5de4e7;--pink:#ff6b9a;--green:#72e6a2}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(1000px 650px at 50% -15%,#182039 0,#090c14 55%,#05070c 100%);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;padding:30px 18px 56px}.wrap{max-width:1180px;margin:auto}.eyebrow{font:11px ui-monospace,monospace;letter-spacing:2.8px;text-transform:uppercase;color:#59657b;margin-bottom:9px}h1{font-size:clamp(30px,5vw,52px);line-height:1.02;font-weight:300;margin:0 0 12px;letter-spacing:-1px}h1 em{font-style:normal;color:var(--gold)}.lede{max-width:72ch;color:var(--dim);line-height:1.65;margin:0 0 22px}.lede b{color:var(--fg);font-weight:550}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px;align-items:center}button{border:1px solid var(--line);background:#111827;color:var(--fg);border-radius:10px;padding:10px 14px;font:12px ui-monospace,monospace;cursor:pointer;transition:.15s}button:hover{border-color:#4b607f;transform:translateY(-1px)}button.primary{background:linear-gradient(135deg,#745817,#4b3a13);border-color:#a57b1f;color:#fff3c8}button.camera{background:#0d3034;border-color:#18555d}.target{font:12px ui-monospace,monospace;color:var(--dim);padding:0 4px}.target b{color:var(--gold)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pane{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel);position:relative}.panehead{display:flex;justify-content:space-between;align-items:center;padding:10px 13px;background:#0b101a;border-bottom:1px solid var(--line);font:11px ui-monospace,monospace;text-transform:uppercase;letter-spacing:1.3px;color:#718098}.panehead b{color:#c5d2e6;font-weight:500}.pane canvas{display:block;width:100%;height:auto;aspect-ratio:16/10;background:#080b12}.badge{position:absolute;top:45px;right:12px;background:#080b12cc;border:1px solid #28314a;border-radius:999px;padding:6px 9px;font:10px ui-monospace,monospace;color:#9ba8bc;pointer-events:none}.badge.hot{color:#fff0b3;border-color:#9a7124;box-shadow:0 0 18px #ffcf5530}.readouts{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;margin-top:12px;border:1px solid var(--line);background:var(--line);border-radius:13px;overflow:hidden}.read{background:#0d121e;padding:12px 13px}.read .k{font:9px ui-monospace,monospace;letter-spacing:1.2px;text-transform:uppercase;color:#657188;margin-bottom:5px}.read .v{font:21px ui-monospace,monospace;font-weight:300}.read .v small{font-size:10px;color:#7d899e}.notes{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;margin-top:26px;color:var(--dim);line-height:1.62;font-size:13px}.notes h2{font-size:13px;color:#cbd6e9;text-transform:uppercase;letter-spacing:1.4px;font-family:ui-monospace,monospace;font-weight:500}.notes code{color:#cfd8e8}.rule{border-left:2px solid #28324a;padding-left:14px}.status{margin-left:auto;font:11px ui-monospace,monospace;color:#718098}.status.good{color:var(--green)}.status.bad{color:#ff849d}footer{margin-top:30px;color:#59657b;font:11px ui-monospace,monospace;line-height:1.7}.hidden{display:none}@media(max-width:820px){.grid{grid-template-columns:1fr}.readouts{grid-template-columns:repeat(3,1fr)}.notes{grid-template-columns:1fr}}@media(max-width:480px){.readouts{grid-template-columns:repeat(2,1fr)}body{padding:20px 10px 44px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">PerceptionLab · FlyBench · live browser organism</div>
+  <h1>Teach a neuron<br>made of <em>flies</em>.</h1>
+  <p class="lede">Each fly is a tiny temporal resonator. It spends energy to exist, remembers what rhythm it heard, and contributes to one soma. <b>Your click is not a label.</b> It is food delivered only to flies that were already eligible. Fed flies persist and bud nearby tunings. Their rewarded positions also grow the dendrite on the right.</p>
+
+  <div class="toolbar">
+    <button class="primary" id="startBtn">▶ run synthetic room</button>
+    <button class="camera" id="cameraBtn">use camera</button>
+    <button id="teachBtn">⚡ teach now</button>
+    <button id="reverseBtn">reverse target → B</button>
+    <button id="resetBtn">reset organism</button>
+    <span class="target">teacher target <b id="targetLabel">A · fast</b></span>
+    <span class="status" id="status">ready</span>
+  </div>
+
+  <div class="grid">
+    <section class="pane">
+      <div class="panehead"><span>ecology</span><b>what the flies hear</b></div>
+      <canvas id="worldCanvas" width="720" height="450"></canvas>
+      <div class="badge" id="teachBadge">click when target glows</div>
+    </section>
+    <section class="pane">
+      <div class="panehead"><span>morphology</span><b>where reward became structure</b></div>
+      <canvas id="arborCanvas" width="720" height="450"></canvas>
+      <div class="badge">space-colonization arbor</div>
+    </section>
+  </div>
+
+  <div class="readouts">
+    <div class="read"><div class="k">population</div><div class="v" id="popV">0</div></div>
+    <div class="read"><div class="k">median tuning</div><div class="v" id="omegaV">—</div></div>
+    <div class="read"><div class="k">soma</div><div class="v" id="somaV">0<small> / 0</small></div></div>
+    <div class="read"><div class="k">clicks</div><div class="v" id="clickV">0</div></div>
+    <div class="read"><div class="k">births</div><div class="v" id="birthV">0</div></div>
+    <div class="read"><div class="k">arbor segments</div><div class="v" id="arborV">0</div></div>
+  </div>
+
+  <div class="notes">
+    <div>
+      <h2>How to play</h2>
+      <p>Start the synthetic room. Patch <b style="color:var(--pink)">A</b> flickers fast; patch <b style="color:var(--cyan)">B</b> flickers slowly. When your chosen target is bright, press <b>teach now</b>, hit <b>Space</b>, or click the ecology. Do it repeatedly. Matching flies accumulate eligibility, receive more food, anchor, and bud. Use <b>reverse target</b> and teach the other patch; the tuning histogram can move back.</p>
+      <p>Camera mode replaces the synthetic pixels with your webcam. Nothing is uploaded: the video stays in the browser and is sampled locally by the flies.</p>
+    </div>
+    <div class="rule">
+      <h2>The actual rules</h2>
+      <p><code>z ← r·e^(iω)·z + (1−r)·d</code><br>eligibility decays from recent contribution; a click distributes a bounded food budget through that eligibility; high-energy flies bud with a small tuning mutation. Rewarded fly positions deposit growth resource. No click → no reward → no arbor resource.</p>
+      <p>This is a public visual port of the FlyBench mechanism, not a claim that a fly colony is a biological neuron. The Python bench remains the measured reference.</p>
+    </div>
+  </div>
+  <footer>Do not hype. Do not lie. Just show. · Synthetic mode starts instantly; camera permission is optional.</footer>
+</div>
+<video id="cameraVideo" class="hidden" autoplay playsinline muted></video>
+<canvas id="cameraBuffer" class="hidden" width="720" height="450"></canvas>
+
+<script type="module">
+import { makeFly, driveFly, Soma, Arbor, seededRandom, gaussian, hueForOmega } from './fly_core.js';
+
+const world = document.getElementById('worldCanvas');
+const arborCanvas = document.getElementById('arborCanvas');
+const wctx = world.getContext('2d');
+const actx = arborCanvas.getContext('2d');
+const video = document.getElementById('cameraVideo');
+const buffer = document.getElementById('cameraBuffer');
+const bctx = buffer.getContext('2d', { willReadFrequently:true });
+const statusEl = document.getElementById('status');
+const badge = document.getElementById('teachBadge');
+const A = { x:.30, y:.43, radius:.15, omega:.94, color:'#ff6b9a', label:'A · fast' };
+const B = { x:.70, y:.43, radius:.15, omega:.31, color:'#5de4e7', label:'B · slow' };
+let target = A;
+let mode = 'synthetic';
+let running = false;
+let frame = 0;
+let pendingClick = false;
+let flash = 0;
+let clicks = 0;
+let lastTs = 0;
+let rng, flies, soma, arbor, camPixels = null, stream = null;
+
+function setStatus(text, kind=''){ statusEl.textContent=text; statusEl.className='status '+kind; }
+function rand(a=0,b=1){ return a+(b-a)*rng(); }
+function resetState(){
+  rng = seededRandom((Date.now() ^ 0xF17B3) >>> 0);
+  flies=[];
+  for(let i=0;i<30;i++) flies.push(makeFly({x:rand(50,world.width-50),y:rand(50,world.height-50),omega:rand(.14,1.18),r:rand(.87,.95),energy:rand(76,94),angle:rand(0,Math.PI*2)}));
+  soma=new Soma({rng,theta:10});
+  arbor=new Arbor({x:70,y:arborCanvas.height-72,rng,attract:115,kill:9,seg:4,noise:.13,life:900,maxNodes:5000});
+  frame=0; clicks=0; flash=0; pendingClick=false;
+  updateReadouts();
+}
+resetState();
+
+function syntheticSample(x,y,t){
+  let v = 38 + 8*Math.sin(x*.018) + 5*Math.cos(y*.025);
+  for(const p of [A,B]){
+    const px=p.x*world.width, py=p.y*world.height;
+    const d=Math.hypot(x-px,y-py);
+    if(d<p.radius*world.width){
+      const edge=1-d/(p.radius*world.width);
+      v += edge*(92+88*Math.sin(p.omega*t));
+    }
+  }
+  return Math.max(0,Math.min(255,v));
+}
+
+function patchGlow(p){ return .5+.5*Math.sin(p.omega*frame); }
+function drawSynthetic(){
+  const g=wctx.createLinearGradient(0,0,0,world.height); g.addColorStop(0,'#11192a'); g.addColorStop(1,'#080b12'); wctx.fillStyle=g; wctx.fillRect(0,0,world.width,world.height);
+  wctx.fillStyle='#151d2b'; wctx.fillRect(0,world.height*.73,world.width,world.height*.27);
+  wctx.strokeStyle='#23314b';wctx.lineWidth=2;wctx.strokeRect(world.width*.08,world.height*.12,world.width*.84,world.height*.58);
+  for(const p of [A,B]){
+    const glow=patchGlow(p), x=p.x*world.width,y=p.y*world.height,r=p.radius*world.width;
+    const grad=wctx.createRadialGradient(x,y,5,x,y,r);grad.addColorStop(0,p.color+(glow>.55?'dd':'66'));grad.addColorStop(1,'#00000000');wctx.fillStyle=grad;wctx.beginPath();wctx.arc(x,y,r,0,Math.PI*2);wctx.fill();
+    wctx.strokeStyle=p.color;wctx.globalAlpha=.45+.5*glow;wctx.lineWidth=2;wctx.beginPath();wctx.arc(x,y,r*.63,0,Math.PI*2);wctx.stroke();wctx.globalAlpha=1;
+    wctx.font='600 15px ui-monospace,monospace';wctx.fillStyle=p.color;wctx.fillText(`${p.label}  ${(p.omega/(2*Math.PI)*30).toFixed(1)} Hz*`,x-r*.4,y+5);
+  }
+  wctx.font='10px ui-monospace,monospace';wctx.fillStyle='#64718a';wctx.fillText('*at a nominal 30 fps',world.width-135,world.height-12);
+}
+
+function updateCameraFrame(){
+  if(mode!=='camera'||!video.videoWidth) return;
+  bctx.save();bctx.translate(buffer.width,0);bctx.scale(-1,1);bctx.drawImage(video,0,0,buffer.width,buffer.height);bctx.restore();
+  camPixels=bctx.getImageData(0,0,buffer.width,buffer.height).data;
+  wctx.drawImage(buffer,0,0,world.width,world.height);
+  wctx.fillStyle='#03060a44';wctx.fillRect(0,0,world.width,world.height);
+}
+function cameraSample(x,y){
+  if(!camPixels) return 128;
+  const ix=Math.max(0,Math.min(buffer.width-1,Math.floor(x/world.width*buffer.width))), iy=Math.max(0,Math.min(buffer.height-1,Math.floor(y/world.height*buffer.height))); const k=4*(iy*buffer.width+ix); return .2126*camPixels[k]+.7152*camPixels[k+1]+.0722*camPixels[k+2];
+}
+
+function moveFly(f){
+  const heard=Math.tanh(f.heard/18), anchored=f.anchor>0;
+  if(anchored){ f.vx*=.70;f.vy*=.70; }
+  else if(heard>.16){ f.vx*=.84;f.vy*=.84; f.vx+=(rng()-.5)*.18;f.vy+=(rng()-.5)*.18; }
+  else { f.angle += gaussian(rng)*.10; f.vx=.90*f.vx+.10*Math.cos(f.angle)*2.7; f.vy=.90*f.vy+.10*Math.sin(f.angle)*2.7; }
+  f.x+=f.vx;f.y+=f.vy;
+  if(f.x<8||f.x>world.width-8){f.vx*=-1;f.angle=Math.PI-f.angle;f.x=Math.max(8,Math.min(world.width-8,f.x));}
+  if(f.y<8||f.y>world.height-8){f.vy*=-1;f.angle=-f.angle;f.y=Math.max(8,Math.min(world.height-8,f.y));}
+}
+
+function tickLearning(){
+  for(const f of flies){
+    const sample=mode==='camera'?cameraSample(f.x,f.y):syntheticSample(f.x,f.y,frame);
+    driveFly(f,sample,{noiseFloor:mode==='camera'?7:10});
+    f.settled=true;
+    f.energy-=.022;
+    moveFly(f);
+  }
+  const result=soma.step(flies,{click:pendingClick,learn:true});
+  if(pendingClick){clicks++;flash=6;pendingClick=false;}
+  if(result.fed.length){
+    arbor.feed(result.fed.map(({fly})=>({x:fly.x,y:fly.y,color:hueForOmega(fly.omega)})),{perPoint:3,jitter:18});
+  }
+  for(let i=flies.length-1;i>=0;i--) if(flies[i].energy<=1) flies.splice(i,1);
+  while(flies.length<18) flies.push(makeFly({x:rand(30,world.width-30),y:rand(30,world.height-30),omega:rand(.14,1.18),r:rand(.87,.95),energy:86,angle:rand(0,Math.PI*2)}));
+  for(let i=0;i<2;i++) arbor.step();
+  return result;
+}
+
+function drawFlies(result){
+  const sx=62,sy=world.height-63;
+  let cmax=.0001;for(const f of flies)cmax=Math.max(cmax,f.contrib);
+  for(const f of flies){
+    if(f.contrib>0){wctx.strokeStyle=hueForOmega(f.omega);wctx.globalAlpha=Math.min(.34,.07+.27*f.contrib/cmax);wctx.lineWidth=1+3*f.contrib/cmax;wctx.beginPath();wctx.moveTo(f.x,f.y);wctx.lineTo(sx,sy);wctx.stroke();}
+  }
+  wctx.globalAlpha=1;
+  for(const f of flies){
+    const c=hueForOmega(f.omega), r=4+Math.min(5,f.energy/42);wctx.strokeStyle=c;wctx.lineWidth=f.anchor>0?2.5:1.4;wctx.beginPath();wctx.arc(f.x,f.y,r,0,Math.PI*2);wctx.stroke();wctx.strokeStyle='#ffffff88';wctx.beginPath();wctx.moveTo(f.x,f.y);wctx.lineTo(f.x+Math.cos(f.angle)*9,f.y+Math.sin(f.angle)*9);wctx.stroke();
+  }
+  const fill=Math.min(1,soma.V/Math.max(1,soma.theta));wctx.fillStyle=result.y?'#ffd166':'#5d6677';wctx.beginPath();wctx.arc(sx,sy,10+25*fill,0,Math.PI*2);wctx.fill();wctx.strokeStyle='#f4f7ff';wctx.lineWidth=2;wctx.beginPath();wctx.arc(sx,sy,38,0,Math.PI*2);wctx.stroke();wctx.fillStyle='#dbe5f4';wctx.font='10px ui-monospace,monospace';wctx.fillText('SOMA',sx-14,sy+55);
+  if(flash>0){wctx.strokeStyle='#fff4c4';wctx.lineWidth=8;wctx.globalAlpha=flash/6;wctx.strokeRect(4,4,world.width-8,world.height-8);wctx.globalAlpha=1;flash--;}
+  drawHistogram();
+}
+function drawHistogram(){
+  const x0=14,y0=15,w=180,h=60,bins=16,counts=Array(bins).fill(0);for(const f of flies){const k=Math.max(0,Math.min(bins-1,Math.floor((f.omega-.12)/1.12*bins)));counts[k]++;}const max=Math.max(1,...counts);wctx.fillStyle='#05070bbb';wctx.fillRect(x0,y0,w,h+24);for(let i=0;i<bins;i++){const bh=h*counts[i]/max;const om=.12+(i+.5)/bins*1.12;wctx.fillStyle=hueForOmega(om);wctx.fillRect(x0+i*w/bins,y0+h-bh,w/bins-1,bh);}wctx.fillStyle='#aab5c7';wctx.font='9px ui-monospace,monospace';wctx.fillText('population tuning ω',x0,y0+h+14);}
+
+function drawArbor(){
+  actx.fillStyle='#060910';actx.fillRect(0,0,arborCanvas.width,arborCanvas.height);
+  const grad=actx.createRadialGradient(arborCanvas.width*.5,arborCanvas.height*.4,20,arborCanvas.width*.5,arborCanvas.height*.4,arborCanvas.width*.7);grad.addColorStop(0,'#101827');grad.addColorStop(1,'#060910');actx.fillStyle=grad;actx.fillRect(0,0,arborCanvas.width,arborCanvas.height);
+  for(const r of arbor.resources){actx.globalAlpha=Math.max(.05,1-r.age/arbor.life)*.5;actx.fillStyle=r.color;actx.fillRect(r.x-1,r.y-1,3,3);}actx.globalAlpha=1;
+  for(let i=1;i<arbor.nodes.length;i++){const n=arbor.nodes[i],p=arbor.nodes[n.parent];actx.strokeStyle=n.color;actx.globalAlpha=.55;actx.lineWidth=1+Math.min(5,Math.log2(1+n.count)*.65);actx.beginPath();actx.moveTo(p.x,p.y);actx.lineTo(n.x,n.y);actx.stroke();}actx.globalAlpha=1;const root=arbor.nodes[0];actx.strokeStyle='#f7fbff';actx.lineWidth=2;actx.beginPath();actx.arc(root.x,root.y,10,0,Math.PI*2);actx.stroke();actx.font='10px ui-monospace,monospace';actx.fillStyle='#718099';actx.fillText('reward crystallizes here',14,22);
+}
+function medianOmega(){const a=flies.map(f=>f.omega).sort((a,b)=>a-b);if(!a.length)return NaN;const m=a.length>>1;return a.length%2?a[m]:(a[m-1]+a[m])/2;}
+function updateReadouts(){document.getElementById('popV').textContent=flies.length;const m=medianOmega();document.getElementById('omegaV').textContent=Number.isFinite(m)?m.toFixed(2):'—';document.getElementById('somaV').innerHTML=`${soma.V.toFixed(1)}<small> / ${soma.theta.toFixed(1)}</small>`;document.getElementById('clickV').textContent=clicks;document.getElementById('birthV').textContent=soma.born;document.getElementById('arborV').textContent=Math.max(0,arbor.nodes.length-1);}
+
+function loop(ts){
+  requestAnimationFrame(loop); if(!running)return; if(ts-lastTs<28)return; lastTs=ts; frame++;
+  if(mode==='synthetic')drawSynthetic();else updateCameraFrame();
+  const result=tickLearning();drawFlies(result);drawArbor();updateReadouts();
+  const glow=mode==='synthetic'?patchGlow(target):0;badge.classList.toggle('hot',glow>.72);badge.textContent=mode==='synthetic'?(glow>.72?'TARGET GLOWING · CLICK':'wait for target glow'):'click when the event you want is happening';
+}
+requestAnimationFrame(loop);drawSynthetic();drawArbor();
+
+function teach(){pendingClick=true;if(!running){running=true;document.getElementById('startBtn').textContent='❚❚ pause';} }
+async function useCamera(){
+  try{if(!navigator.mediaDevices?.getUserMedia)throw new Error('camera API unavailable');stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});video.srcObject=stream;await video.play();mode='camera';running=true;setStatus('camera is local · nothing uploaded','good');document.getElementById('startBtn').textContent='❚❚ pause';}
+  catch(err){setStatus(`camera unavailable: ${err.message}`,'bad');mode='synthetic';}
+}
+function syntheticMode(){mode='synthetic';camPixels=null;if(stream){for(const tr of stream.getTracks())tr.stop();stream=null;}running=!running;document.getElementById('startBtn').textContent=running?'❚❚ pause':'▶ run synthetic room';setStatus(running?'synthetic ecology running':'paused',running?'good':'');}
+function reset(){resetState();setStatus('organism reset');}
+function reverse(){target=target===A?B:A;document.getElementById('targetLabel').textContent=target.label;document.getElementById('targetLabel').style.color=target.color;document.getElementById('reverseBtn').textContent=target===A?'reverse target → B':'reverse target → A';setStatus(`teacher now rewards ${target.label}`,'good');}
+
+document.getElementById('startBtn').addEventListener('click',syntheticMode);document.getElementById('cameraBtn').addEventListener('click',useCamera);document.getElementById('teachBtn').addEventListener('click',teach);document.getElementById('reverseBtn').addEventListener('click',reverse);document.getElementById('resetBtn').addEventListener('click',reset);world.addEventListener('click',teach);window.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();teach();}});
+</script>
+</body>
+</html>
