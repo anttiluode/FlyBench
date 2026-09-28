@@ -51,6 +51,11 @@ OMEGA_MUT_SD = 0.12  # a bud's tuning mutates by about +-12% (log-normal)
 
 def make_neuron_bug(EnhancedBug, self_feed=0.0):
     Base = rb.make_bug_class(EnhancedBug, "resonator")
+    if not hasattr(Base, "SELF_FEED") or "anchor" not in open(rb.__file__).read():
+        raise RuntimeError(
+            "resonator_brain.py is older than neuron.py: copy the resonator_brain.py that came "
+            "with neuron.py (it has SELF_FEED and anchoring). With the old one the flies feed "
+            "themselves and the neuron never needs your clicks.")
 
     class NeuronBug(Base):
         SELF_FEED = self_feed
