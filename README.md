@@ -2,8 +2,6 @@
 
 EDIT: New HTML version live: 
 
-https://anttiluode.github.io/
-
 [Check it out!](https://anttiluode.github.io/FlyBench/)
 
 ![A clicker-trained fly neuron in a real room. Left: the live webcam with resonator flies; lines run from the flies feeding the soma (bottom left). Right: the dendrite that grew toward where the clicks fed flies, coloured by their tuning.](pic.png)
