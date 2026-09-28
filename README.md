@@ -130,8 +130,6 @@ The live launcher was smoke-tested here with stubbed Tk (brain swap, inheritance
 
 # Part 3 — Clicker neuron: a colony taught with clicks
 
-![pic](pic.png)
-
 One colony becomes one neuron. The flies are the dendrite: each listening fly is a tuned temporal filter sitting at a place. The soma sums what they hear, and a teacher's click is the modulator. `neuron.py`:
 
 | part | rule | clock |
@@ -184,3 +182,24 @@ python neuron_bench.py clicker,clicker_B,shuffled,no_credit 0,1,2,3   # ~40 min 
 python bank_control.py 0,1,2,3
 python neuron_report.py
 ```
+
+---
+
+# Part 4 — Is the resonator approach cheaper than a transformer?
+
+`compare.py`, `compare2.py`: forecast 1 and 8 steps ahead, scored on the last 20% of each series (never trained on), as MSE ÷ MSE of "same as last value". Models: ridge on the last 32 values (**linear**); 64 random windowed resonators + ridge readout (**res**, the fly unit); the same bank grown by selection, where the least useful resonators die and the most useful bud mutated copies, with no gradients (**grown**); and a 2-layer transformer (d = 32, window 32, Adam, early stopping). Two or three seeds each.
+
+| task (training points) | linear | res | grown | transformer |
+|---|---|---|---|---|
+| sunspots, 1 step (~170) | 0.34 | **0.34** | 0.34 | 0.62 |
+| sunspots, 8 steps | 0.26 | **0.24** | 0.30 | 0.89 |
+| CO₂ weekly change, 1 step (~1,400) | 0.41 | 0.33 | **0.31** | 0.38 |
+| recurring nonlinear regimes, 500, 1 step | 0.67 | 0.67 | **0.66** | 0.87 |
+| recurring regimes, 2,000, 1 step | 0.58 | 0.55 | **0.55** | 0.58 |
+| recurring regimes, 2,000, 8 steps | 0.49 | 0.38 | 0.37 | **0.35** |
+| recurring regimes, 8,000, 1 step | 0.60 | 0.56 | 0.56 | **0.38** |
+| recurring regimes, 8,000, 8 steps | 0.31 | 0.26 | 0.24 | **0.16** |
+
+Cost: 258 parameters against 26,529; training 0.01–0.06 s against 10–320 s; 7 µs against 608 µs per new sample in streaming use (85×). The 20,000-point runs were not completed.
+
+**Verdict.** Below a few thousand points the resonator bank wins or ties at about 1/1000 of the training cost. With plenty of data and learnable nonlinear structure, the transformer wins (crossover between 2,000 and 8,000 points here). Growing the bank by selection adds little and inconsistently (better on CO₂, worse on sunspots at 8 steps) at 30× the fitting time. The advantage comes from the resonator prior, which is known: the unit `z ← r·e^{iω}·z + x` is one mode of a diagonal linear state-space model (LRU, S4D). A separate synthetic set that drew new random rhythms per segment (`switching` in `compare_results.json`) was unforecastable for every model at 4,000 points and says little.
