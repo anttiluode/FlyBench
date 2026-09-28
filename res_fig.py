@@ -55,7 +55,7 @@ ax.set_yticks(y); ax.set_yticklabels(labels)
 ax.set_xlim(0, max(vals) * 1.35 + 0.02)
 ax.grid(axis="x", color=GRID, lw=0.6)
 ax.set_xlabel("R² (held-out run)")
-ax.set_title("C. Stop/go explained by the camera alone\n(the untuned control is the most camera-predictable)", loc="left", fontsize=9, color=INK)
+ax.set_title("C. Stop/go explained by the camera alone\n(held-out run, corrected Sep 28)", loc="left", fontsize=9, color=INK)
 
 fig.suptitle("Resonator flies: each goes to the rhythm it is tuned to — and the camera finally matters",
              x=0.01, ha="left", fontsize=11, weight="bold", color=INK, y=1.04)

@@ -1,0 +1,50 @@
+{
+ "bank_random_s0": {
+  "rate_A": 0.1688888888888889,
+  "rate_B": 0.0,
+  "rate_after_light_switch": 0.06666666666666667,
+  "rate_overall": 0.08444444444444445
+ },
+ "bank_lamp_s0": {
+  "rate_A": 0.1688888888888889,
+  "rate_B": 0.0,
+  "rate_after_light_switch": 0.15,
+  "rate_overall": 0.08444444444444445
+ },
+ "bank_random_s1": {
+  "rate_A": 0.18666666666666668,
+  "rate_B": 0.0044444444444444444,
+  "rate_after_light_switch": 0.0,
+  "rate_overall": 0.09555555555555556
+ },
+ "bank_lamp_s1": {
+  "rate_A": 0.19111111111111112,
+  "rate_B": 0.0,
+  "rate_after_light_switch": 0.11666666666666667,
+  "rate_overall": 0.09555555555555556
+ },
+ "bank_random_s2": {
+  "rate_A": 0.17777777777777778,
+  "rate_B": 0.0,
+  "rate_after_light_switch": 0.10833333333333334,
+  "rate_overall": 0.08888888888888889
+ },
+ "bank_lamp_s2": {
+  "rate_A": 0.17777777777777778,
+  "rate_B": 0.0,
+  "rate_after_light_switch": 0.14166666666666666,
+  "rate_overall": 0.08888888888888889
+ },
+ "bank_random_s3": {
+  "rate_A": 0.19333333333333333,
+  "rate_B": 0.0,
+  "rate_after_light_switch": 0.06666666666666667,
+  "rate_overall": 0.09666666666666666
+ },
+ "bank_lamp_s3": {
+  "rate_A": 0.19333333333333333,
+  "rate_B": 0.0,
+  "rate_after_light_switch": 0.15,
+  "rate_overall": 0.09666666666666666
+ }
+}

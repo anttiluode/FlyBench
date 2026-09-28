@@ -1,56 +1,4 @@
 {
-  "CLEAN_sorting_no_breeding": {
-    "resonator": {
-      "n_flies": 120,
-      "tuned_A": {
-        "n": 34,
-        "mean_time_at_A": 0.5247794117647059,
-        "mean_time_at_B": 0.06941176470588235
-      },
-      "tuned_B": {
-        "n": 22,
-        "mean_time_at_A": 0.14295454545454545,
-        "mean_time_at_B": 0.2932954545454546
-      },
-      "untuned": {
-        "n": 64,
-        "mean_time_at_A": 0.1475859375,
-        "mean_time_at_B": 0.179671875
-      },
-      "spearman_tuning_vs_place_preference": 0.4232707962026134,
-      "p_value": 1.460541301544369e-06
-    },
-    "window": {
-      "n_flies": 120,
-      "tuned_A": {
-        "n": 34,
-        "mean_time_at_A": 0.4047794117647059,
-        "mean_time_at_B": 0.3095147058823529
-      },
-      "tuned_B": {
-        "n": 22,
-        "mean_time_at_A": 0.3043181818181818,
-        "mean_time_at_B": 0.18440909090909094
-      },
-      "untuned": {
-        "n": 64,
-        "mean_time_at_A": 0.3432109375,
-        "mean_time_at_B": 0.3243359375
-      },
-      "spearman_tuning_vs_place_preference": -0.09285194999214962,
-      "p_value": 0.31312965196838594
-    }
-  },
-  "camera_observer_original": {
-    "turn": {
-      "camera_instant": 0.0018337161643445787,
-      "camera_16_frame_spectra": 0.017120172129450606
-    },
-    "speed": {
-      "camera_instant": 0.012716375086575193,
-      "camera_16_frame_spectra": 0.041450696639439455
-    }
-  },
   "sorting_with_breeding_resonator_s0__LINEAGE_CONFOUNDED": {
     "tuned_to_A": {
       "fly_frames": 15842,
@@ -217,6 +165,5 @@
       "camera_instant": 0.06651751490832492,
       "camera_16_frame_spectra": 0.09377245365657161
     }
-  },
-  "_note": "Sep 28: breeding-run entries replaced after the child-class fix; camera_plus_tuning withdrawn (not rerun)."
+  }
 }

@@ -59,6 +59,7 @@ def make_bug_class(EnhancedBug, mode="resonator", omega_range=(0.1, 1.3)):
 
     class ResonatorBug(EnhancedBug):
         BRAIN = mode
+        SELF_FEED = 1.0        # 0 = eats only what a neuron/teacher gives it
 
         def __init__(self, *a, **kw):
             super().__init__(*a, **kw)
@@ -70,6 +71,7 @@ def make_bug_class(EnhancedBug, mode="resonator", omega_range=(0.1, 1.3)):
             self.activity = np.zeros(len(EYE))
             self.phase, self.phase_t = "listen", 0
             self.hop_turn, self.heard = 0.0, 0.0
+            self.settled = False
 
         def inherit_traits(self, parent_traits, mutation_rate):
             super().inherit_traits(parent_traits, mutation_rate)
@@ -114,12 +116,14 @@ def make_bug_class(EnhancedBug, mode="resonator", omega_range=(0.1, 1.3)):
                 speed = 0.0
                 rot = -wander + 0.05 * side * np.tanh(heard)   # efference copy: hold still
                 settled = self.phase_t >= 1.5 / (1 - r)
-                if settled and heard < STAY_LEVEL:
+                if settled and heard < STAY_LEVEL and getattr(self, "anchor", 0) <= 0:
                     self.phase, self.phase_t = "hop", 0
                     self.hop_turn = 0.25 * side if heard > 0 else 0.0
+                self.settled = bool(listening and settled)
                 if listening and settled:
-                    self.energy += min(EAT_GAIN * heard, 5.0)
+                    self.energy += self.SELF_FEED * min(EAT_GAIN * heard, 5.0)
             else:
+                self.settled = False
                 speed = self.traits["max_speed"] * 0.6
                 rot = self.hop_turn
                 if self.phase_t >= HOP_FRAMES:

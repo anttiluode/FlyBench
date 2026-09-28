@@ -271,7 +271,22 @@ def brain_class(name):
 
 # ---------------------------------------------------------------- run loop
 def run(scene_name="room", n_frames=3000, seed=0, verbose=False, brain="original",
-        pop=None, breed=True):
+        pop=None, breed=True, bug_class=None):
+    """try_mate (original code) builds children by looking up the global name
+    EnhancedBug in the exec'd namespace. Point that name at the brain being run,
+    or every child gets the original ThinkingField brain. (Bug found Sep 28;
+    breeding runs before that had original-brain children.)"""
+    Bug = bug_class or brain_class(brain)
+    g = EnhancedBug.try_mate.__globals__
+    saved = g["EnhancedBug"]
+    g["EnhancedBug"] = Bug
+    try:
+        return _run(scene_name, n_frames, seed, verbose, Bug, pop, breed)
+    finally:
+        g["EnhancedBug"] = saved
+
+
+def _run(scene_name, n_frames, seed, verbose, Bug, pop, breed):
     """Headless copy of BugGUI.initialize_population + process_frame.
     pop: override initial population; breed=False disables births (no lineages,
     starved flies are replaced by fresh random ones via the original repopulate)."""
@@ -283,7 +298,6 @@ def run(scene_name="room", n_frames=3000, seed=0, verbose=False, brain="original
     if not breed:
         cfg.max_population = 0
     scene = SCENES[scene_name](seed)
-    Bug = brain_class(brain)
 
     uid = [0]
 

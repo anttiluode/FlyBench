@@ -86,12 +86,14 @@ def patched_update_graph(self, keep=3000, every=30):
     self.canvas_graph.draw()
 
 
-def patched_update_display(self, frame):
+def tick_fps(self):
     now = time.time()
     self._fps = 0.9 * getattr(self, "_fps", 15.0) + 0.1 / max(now - getattr(self, "_last", now - 1 / 15), 1e-3)
     self._last = now
-    log_state(self, frame, now)
-    img = frame.copy()
+    return now
+
+
+def draw_rings_and_hist(self, img):
     for bug in self.bugs:
         w = bug.traits.get("omega", 0.5)
         col = hue_bgr(w)
@@ -114,6 +116,10 @@ def patched_update_display(self, frame):
             px = x0 + int((wv - 0.03) / (2.8 - 0.03) * 24 * bw)
             cv2.putText(img, f"{wv * fps / (2 * np.pi):.1f}Hz", (px - 12, y0 + hh + 18),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.35, (255, 255, 255), 1)
+    return img
+
+
+def push_to_canvas(self, img):
     frame_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     for bug in self.bugs:
         self.fly_visuals.draw_fly(frame_rgb, bug.x, bug.y, bug.angle, bug.is_mating,
@@ -127,6 +133,12 @@ def patched_update_display(self, frame):
     photo = df.ImageTk.PhotoImage(image=df.Image.fromarray(frame_rgb))
     self.canvas.create_image(0, 0, image=photo, anchor=df.tk.NW)
     self.canvas.photo = photo
+
+
+def patched_update_display(self, frame):
+    now = tick_fps(self)
+    log_state(self, frame, now)
+    push_to_canvas(self, draw_rings_and_hist(self, frame.copy()))
 
 
 class _SafeJSON:
