@@ -4,7 +4,7 @@ EDIT: New HTML version live:
 
 [Check it out!](https://anttiluode.github.io/FlyBench/)
 
-[Web version!](pic2.png)
+![Web version](pic2.png)
 
 *Left: resonator flies living on a webcam feed. Each ring's colour is the fly's tuning, the lines are the flies currently feeding the soma (bottom left), and the strip top left is the colony's tuning in Hz. Right: the arbor, a dendrite grown from the soma toward wherever the teacher's clicks fed flies, coloured by what they were tuned to.*
 
