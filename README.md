@@ -130,6 +130,8 @@ The live launcher was smoke-tested here with stubbed Tk (brain swap, inheritance
 
 # Part 3 — Clicker neuron: a colony taught with clicks
 
+![pic](pic.png)
+
 One colony becomes one neuron. The flies are the dendrite: each listening fly is a tuned temporal filter sitting at a place. The soma sums what they hear, and a teacher's click is the modulator. `neuron.py`:
 
 | part | rule | clock |
